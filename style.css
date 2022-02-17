@@ -21,6 +21,22 @@
     height: 9rem;
     background-color: rgb(24, 24, 24);
     margin-top: 5rem;
+    color:white;
+}
+#screen1{
+    color: white;
+    font-size: 1.5rem;
+    text-align: right;
+    padding-right: 1rem;
+    padding-top: 1rem;
+}
+#screen2{
+    color: white;
+    font-size: 2.5rem;
+    text-align: right;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    width: 22rem;
 }
 #mob_but{
     display: grid;
@@ -72,3 +88,7 @@
     background-color: #333333;
     color: white;
 }
+
+
+
+

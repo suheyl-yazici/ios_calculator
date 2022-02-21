@@ -23,8 +23,52 @@ let add = document.querySelector(".add");
 let comma = document.querySelector(".comma");
 let equal = document.querySelector(".equal");
 
+const numbersArray = [
+    button0,
+    button1,
+    button2,
+    button3,
+    button4,
+    button5,
+    button6,
+    button7,
+    button8,
+    button9
+]
 
-let numbers1 = [];
+let screenOneOperand = "";
+let screenSecOperand = "";
+// Functions
+
+function DisplayNumbers(){
+    screenOne.innerHTML= screenOneOperand;
+    screenSec.innerHTML= screenSecOperand;
+}
+
+function AppendNumber (number){
+    console.log("Number: ", number);
+    screenSecOperand = screenSecOperand.toString() + number.toString();
+    DisplayNumbers();
+
+}
+
+// Add event listener to number buttons
+
+for (let i = 0; i<numbersArray.length; i++){
+    const number = numbersArray[i]
+
+    number.addEventListener("click", ()=>{
+        AppendNumber(i);
+    })
+};
+
+
+
+
+
+
+
+/* let numbers1 = [];
 let numbers2 = [];
 
 
@@ -84,5 +128,5 @@ comma.addEventListener('click',()=>{
 
 ac.addEventListener('click',()=>{
     window.location.reload(false);
-})
+}) */
 

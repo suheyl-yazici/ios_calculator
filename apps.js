@@ -24,49 +24,137 @@ let comma = document.querySelector(".comma");
 let equal = document.querySelector(".equal");
 
 const numbersArray = [
-    button0,
-    button1,
-    button2,
-    button3,
-    button4,
-    button5,
-    button6,
-    button7,
-    button8,
-    button9
-]
+  button0,
+  button1,
+  button2,
+  button3,
+  button4,
+  button5,
+  button6,
+  button7,
+  button8,
+  button9,
+];
 
 let screenOneOperand = "";
 let screenSecOperand = "";
+let operation = undefined;
 // Functions
 
-function DisplayNumbers(){
-    screenOne.innerHTML= screenOneOperand;
-    screenSec.innerHTML= screenSecOperand;
+function DisplayNumbers() {
+  if (operation) {
+    screenOne.innerHTML = `${screenOneOperand} ${operation}`;
+  } else {
+    screenOne.innerHTML = screenOneOperand;
+  }
+
+  screenSec.innerHTML = screenSecOperand;
 }
 
-function AppendNumber (number){
-    console.log("Number: ", number);
-    screenSecOperand = screenSecOperand.toString() + number.toString();
-    DisplayNumbers();
-
+function AppendNumber(number) {
+  console.log("Number: ", number);
+  screenSecOperand = screenSecOperand.toString() + number.toString();
+  DisplayNumbers();
 }
 
+function ChooseOperation(selectedOperation) {
+  operation = selectedOperation;
+  screenOneOperand = screenSecOperand;
+  ac.innerHTML = "AC";
+  screenSecOperand = "";
+  DisplayNumbers();
+}
+
+function Compute() {
+  let computation;
+  const previous = parseFloat(screenOneOperand);
+  const current = parseFloat(screenSecOperand);
+
+  switch (operation) {
+    case "+":
+      computation = previous + current;
+      break;
+
+    case "-":
+      computation = previous - current;
+      break;
+
+    case "*":
+      computation = previous * current;
+      break;
+
+    case "/":
+      computation = previous / current;
+      break;
+
+    default:
+      break;
+  }
+  screenOneOperand = computation;
+  screenSecOperand = "";
+  operation = undefined;
+  DisplayNumbers();
+}
+
+function AllClear() {
+  if (!screenOneOperand) {
+    screenSecOperand = screenSecOperand.slice(0, screenSecOperand.length - 1);
+  } else {
+    screenOneOperand = "";
+    screenSecOperand = "";
+    operation = undefined;
+    ac.innerHTML = "C";
+  }
+  DisplayNumbers();
+}
+function Change() {
+  screenSecOperand = screenSecOperand * -1;
+  DisplayNumbers();
+}
+function Modulus() {
+  screenSecOperand = screenSecOperand / 100;
+  DisplayNumbers();
+}
+// Add event listener to operator buttons
+
+minus.addEventListener("click", () => {
+  ChooseOperation("-");
+});
+add.addEventListener("click", () => {
+  ChooseOperation("+");
+});
+multiply.addEventListener("click", () => {
+  ChooseOperation("*");
+});
+divide.addEventListener("click", () => {
+  ChooseOperation("/");
+});
+equal.addEventListener("click", () => {
+  Compute();
+});
+
+// Add event listener to top buttons
+
+ac.addEventListener("click", () => {
+  AllClear();
+});
+
+change.addEventListener("click", () => {
+  Change();
+});
+
+modulus.addEventListener("click", () => {
+  Modulus();
+});
 // Add event listener to number buttons
 
-for (let i = 0; i<numbersArray.length; i++){
-    const number = numbersArray[i]
+for (let i = 0; i < numbersArray.length; i++) {
+  const number = numbersArray[i];
 
-    number.addEventListener("click", ()=>{
-        AppendNumber(i);
-    })
-};
-
-
-
-
-
-
+  number.addEventListener("click", () => {
+    AppendNumber(i);
+  });
+}
 
 /* let numbers1 = [];
 let numbers2 = [];
@@ -129,4 +217,3 @@ comma.addEventListener('click',()=>{
 ac.addEventListener('click',()=>{
     window.location.reload(false);
 }) */
-

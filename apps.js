@@ -39,6 +39,7 @@ const numbersArray = [
 let screenOneOperand = "";
 let screenSecOperand = "";
 let operation = undefined;
+let temporaryOperand;
 // Functions
 
 function DisplayNumbers() {
@@ -52,12 +53,23 @@ function DisplayNumbers() {
 }
 
 function AppendNumber(number) {
-  console.log("Number: ", number);
+  if(number === "." && screenSecOperand.includes(".")) return;
+  if(number === 0 && screenSecOperand === "0") return;
+  if(screenSecOperand.length > 8) return;
   screenSecOperand = screenSecOperand.toString() + number.toString();
   DisplayNumbers();
 }
 
 function ChooseOperation(selectedOperation) {
+  if(temporaryOperand){
+    screenOneOperand = temporaryOperand.toString();
+    screenSecOperand = "";
+    temporaryOperand = "";
+    operation = selectedOperation;
+    DisplayNumbers();
+    return;
+  }
+
   operation = selectedOperation;
   screenOneOperand = screenSecOperand;
   ac.innerHTML = "AC";
@@ -69,6 +81,10 @@ function Compute() {
   let computation;
   const previous = parseFloat(screenOneOperand);
   const current = parseFloat(screenSecOperand);
+
+  if(!operation) return ;
+  if(isNaN(previous) || isNaN(current)) return;
+
 
   switch (operation) {
     case "+":
@@ -90,10 +106,15 @@ function Compute() {
     default:
       break;
   }
+
+  if(isNaN(computation)) return;
+
   screenOneOperand = computation;
   screenSecOperand = "";
   operation = undefined;
   DisplayNumbers();
+  temporaryOperand = screenSecOperand;
+  screenSecOperand = "";
 }
 
 function AllClear() {
@@ -153,67 +174,10 @@ for (let i = 0; i < numbersArray.length; i++) {
 
   number.addEventListener("click", () => {
     AppendNumber(i);
+    temporaryOperand = "";
   });
 }
 
-/* let numbers1 = [];
-let numbers2 = [];
-
-
-if (numbers1.length == 0){
-    screenSec.innerText = 0;
-}
-
-button0.addEventListener('click',()=>{
-    numbers1.push(button0.innerText)
-    screenSec.innerText = Number(numbers1.join(''));
-
+comma.addEventListener("click", ()=> {
+  AppendNumber(".");
 });
-button1.addEventListener('click',()=>{
-    numbers1.push(button1.innerText)
-    screenSec.innerText = Number(numbers1.join(''));
-});
-button2.addEventListener('click',()=>{
-    numbers1.push(button2.innerText)
-    screenSec.innerText = Number(numbers1.join(''));
-});
-button3.addEventListener('click',()=>{
-    numbers1.push(button3.innerText)
-    screenSec.innerText = Number(numbers1.join(''));
-});
-button4.addEventListener('click',()=>{
-    numbers1.push(button4.innerText)
-    screenSec.innerText = Number(numbers1.join(''));
-});
-button5.addEventListener('click',()=>{
-    numbers1.push(button5.innerText)
-    screenSec.innerText = Number(numbers1.join(''));
-});
-button6.addEventListener('click',()=>{
-    numbers1.push(button6.innerText)
-    screenSec.innerText = Number(numbers1.join(''));
-});
-
-button7.addEventListener('click',()=>{
-    numbers1.push(button7.innerText)
-    screenSec.innerText = Number(numbers1.join(''));
-});
-
-button8.addEventListener('click',()=>{
-    numbers1.push(button8.innerText)
-    screenSec.innerText = Number(numbers1.join(''));
-});
-
-button9.addEventListener('click',()=>{
-    numbers1.push(button9.innerText)
-    screenSec.innerText = Number(numbers1.join(''));
-});
-
-comma.addEventListener('click',()=>{
-    numbers1.push(".")
-    screenSec.innerText = Number(numbers1.join(''));
-});
-
-ac.addEventListener('click',()=>{
-    window.location.reload(false);
-}) */
